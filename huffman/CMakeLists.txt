@@ -11,6 +11,9 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 add_executable(huffman
         src/main.cpp
+        src/mainwindow.cpp
+        src/mainwindow.h
+        src/mainwindow.ui
         )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt5::Core Qt5::Widgets)
