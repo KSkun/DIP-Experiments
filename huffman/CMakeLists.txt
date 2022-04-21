@@ -10,6 +10,8 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 add_executable(huffman
+        resource/resources.qrc
+
         src/main.cpp
         src/mainwindow.cpp
         src/mainwindow.h
