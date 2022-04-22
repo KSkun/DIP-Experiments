@@ -16,6 +16,8 @@ add_executable(huffman
         src/mainwindow.cpp
         src/mainwindow.h
         src/mainwindow.ui
+        src/huffman.h
+        src/huffman.cpp
         )
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::Core Qt6::Widgets)
