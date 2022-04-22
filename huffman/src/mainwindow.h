@@ -20,11 +20,13 @@ public:
 private:
     Ui::MainWindow *ui;
     QString fileImage, fileEncoded, fileCode;
-    QImage *image;
+    QImage *image = nullptr;
 
     void refreshImageView();
 
     void refreshFileView();
+
+    void refreshInfoView();
 
 private slots:
     void on_buttonQuit_clicked();

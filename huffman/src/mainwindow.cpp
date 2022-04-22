@@ -24,6 +24,10 @@ void MainWindow::on_buttonFileImage_clicked() {
             tr("图片 (*.png *.jpg *.jpeg *.bmp)")
     ));
     if (file.isEmpty()) return;
+
+    fileImage = file;
+    fileEncoded = fileCode = "";
+
     auto newImage = new QImage(fileImage);
     if (newImage->isNull()) {
         ui->statusBar->showMessage(tr("打开文件失败"));
@@ -36,10 +40,9 @@ void MainWindow::on_buttonFileImage_clicked() {
     delete image;
     image = newImage;
 
-    fileImage = file;
-    fileEncoded = fileCode = "";
     refreshFileView();
     refreshImageView();
+    refreshInfoView();
 }
 
 void MainWindow::on_buttonFileEncoded_clicked() {
@@ -50,8 +53,10 @@ void MainWindow::on_buttonFileEncoded_clicked() {
             tr("已编码文件 (*.bin)")
     ));
     if (file.isEmpty()) return;
+
     fileEncoded = file;
     fileImage = "";
+
     refreshFileView();
 }
 
@@ -63,8 +68,10 @@ void MainWindow::on_buttonFileCode_clicked() {
             tr("编码表 (*.code.bin)")
     ));
     if (file.isEmpty()) return;
+
     fileCode = file;
     fileImage = "";
+
     refreshFileView();
 }
 
@@ -84,4 +91,8 @@ void MainWindow::refreshFileView() {
     ui->labelFileImage->setText(fontMatrics.elidedText(fileImage, Qt::ElideMiddle, labelWidth));
     ui->labelFileEncoded->setText(fontMatrics.elidedText(fileEncoded, Qt::ElideMiddle, labelWidth));
     ui->labelFileCode->setText(fontMatrics.elidedText(fileCode, Qt::ElideMiddle, labelWidth));
+}
+
+void MainWindow::refreshInfoView() {
+    ui->labelSize->setText(QString::asprintf("%d x %d 像素", image->width(), image->height()));
 }
