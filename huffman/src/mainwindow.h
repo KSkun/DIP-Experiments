@@ -5,6 +5,8 @@
 #include <QGraphicsScene>
 #include <QGraphicsPixmapItem>
 
+#include "huffman.h"
+
 namespace Ui {
     class MainWindow;
 }
@@ -21,6 +23,7 @@ private:
     Ui::MainWindow *ui;
     QString fileImage, fileEncoded, fileCode;
     QImage *image = nullptr;
+    HuffmanEncoder *encoder = nullptr;
 
     void refreshImageView();
 

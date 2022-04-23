@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete image;
+    delete encoder;
 }
 
 void MainWindow::on_buttonQuit_clicked() {
