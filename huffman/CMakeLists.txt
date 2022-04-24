@@ -7,7 +7,7 @@ set(CMAKE_PREFIX_PATH $ENV{QT_HOME}/lib/cmake)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
-find_package(Qt6 COMPONENTS Core Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Core Widgets Gui REQUIRED)
 
 add_executable(huffman
         resource/resources.qrc
@@ -18,9 +18,11 @@ add_executable(huffman
         src/mainwindow.ui
         src/huffman.h
         src/huffman.cpp
+        src/util.h
+        src/util.cpp
         )
 
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::Core Qt6::Widgets)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui)
 
 add_custom_command(TARGET huffman POST_BUILD COMMAND
         $ENV{QT_HOME}/bin/windeployqt.exe ${CMAKE_CURRENT_BINARY_DIR}/huffman.exe

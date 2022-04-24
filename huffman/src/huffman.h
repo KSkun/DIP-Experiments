@@ -11,49 +11,33 @@
 #include <QMap>
 
 #define HFM_NODE_NULL quint16(-1)
+#define HFM_VALUE_NULL quint8(-1)
+
+class HuffmanEncoder;
 
 struct CodeFileHeader;
 
+struct EncodedImageHeader;
+
 class HuffmanEncoder {
 public:
-    HuffmanEncoder() = default;
+    explicit HuffmanEncoder(const QImage *image);
 
-    static HuffmanEncoder *fromImage(QImage *image);
+    explicit HuffmanEncoder(const QString &filePath);
 
-    static HuffmanEncoder *fromByteArray(QByteArray *buffer) {
-        auto encoder = new HuffmanEncoder;
-        // TODO
-        return encoder;
-    }
+    void toFile(const QString &filePath) const;
 
-    QByteArray *toByteArray() const {
-        // TODO
-        return nullptr;
-    }
+    QByteArray *encode(QImage *image, quint64 &dataLen) const;
 
-    QByteArray *encode(QImage *image) const {
-        if (treeRoot == HFM_NODE_NULL) {
-            return nullptr;
-        }
-        return nullptr; // TODO
-    }
-
-    QImage *decode(QByteArray *buffer) const {
-        if (treeRoot == HFM_NODE_NULL) {
-            return nullptr;
-        }
-        return nullptr; // TODO
-    }
-
+    QImage *decode(const QByteArray *buffer, quint64 &dataLen) const;
 
 
 private:
-    friend CodeFileHeader;
-
     struct TreeNode {
+        quint8 value = HFM_VALUE_NULL;
         quint16 next[2]{HFM_NODE_NULL, HFM_NODE_NULL};
 
-        bool isLeaf() {
+        bool isLeaf() const {
             return next[0] == HFM_NODE_NULL && next[1] == HFM_NODE_NULL;
         }
     };
@@ -62,7 +46,9 @@ private:
     quint16 treeRoot = HFM_NODE_NULL;
     QMap<quint8, QBitArray *> codes;
 
-    void iterateTree(quint16 nodeIndex, QBitArray *code, const quint8 values[]);
+    HuffmanEncoder() = default;
+
+    void iterateTree(quint16 nodeIndex, QBitArray *code);
 };
 
 #endif //HUFFMAN_HUFFMAN_H
