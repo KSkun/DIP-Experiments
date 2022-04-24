@@ -9,6 +9,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 find_package(Qt6 COMPONENTS Core Widgets Gui REQUIRED)
 
+set(CMAKE_BUILD_TYPE Release)
+
 add_executable(huffman
         resource/resources.qrc
 
