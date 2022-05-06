@@ -12,7 +12,7 @@ endif ()
 
 add_library(${PROJECT_NAME} SHARED
         ${CMAKE_JS_SRC}
-        hello.cpp
+        cpp/hello.cpp
         )
 
 include_directories(${CMAKE_JS_INC})

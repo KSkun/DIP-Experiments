@@ -1,20 +1,92 @@
 <template>
   <div id="app">
-    <landing-page></landing-page>
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <el-card :body-style="{ padding: '0px' }">
+          <div :style="{ 'height': '150px', 'overflow': 'hidden', 'background-image': 'url(static/avatar-kiana.jpg)',
+          'background-repeat': 'no-repeat', 'background-size': 'contain', 'background-position': 'center' }"></div>
+          <div style="padding: 14px;">原图</div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card :body-style="{ padding: '0px' }">
+          <div :style="{ 'height': '150px', 'overflow': 'hidden', 'background-image': 'url(static/avatar-kiana.jpg)',
+          'background-repeat': 'no-repeat', 'background-size': 'contain', 'background-position': 'center' }"></div>
+          <div style="padding: 14px;">梯度</div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card :body-style="{ padding: '0px' }">
+          <div :style="{ 'height': '150px', 'overflow': 'hidden', 'background-image': 'url(static/avatar-kiana.jpg)',
+          'background-repeat': 'no-repeat', 'background-size': 'contain', 'background-position': 'center' }"></div>
+          <div style="padding: 14px;">非极大值抑制</div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <el-card :body-style="{ padding: '0px' }">
+          <div :style="{ 'height': '150px', 'overflow': 'hidden', 'background-image': 'url(static/avatar-kiana.jpg)',
+          'background-repeat': 'no-repeat', 'background-size': 'contain', 'background-position': 'center' }"></div>
+          <div style="padding: 14px;">双阈值</div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card :body-style="{ padding: '0px' }">
+          <div :style="{ 'height': '150px', 'overflow': 'hidden', 'background-image': 'url(static/avatar-kiana.jpg)',
+          'background-repeat': 'no-repeat', 'background-size': 'contain', 'background-position': 'center' }"></div>
+          <div style="padding: 14px;">结果</div>
+        </el-card>
+      </el-col>
+      <el-col :span="8"></el-col>
+    </el-row>
+    <el-card>
+      <el-form ref="form" :model="form" label-width="150px" size="mini">
+        <el-form-item>
+          <span slot="label">原始图片</span>
+          <el-button type="primary" size="mini">选择</el-button>
+        </el-form-item>
+        <el-form-item>
+          <span slot="label">高斯函数标准差 <vue-mathjax :formula="'$\\sigma$'"></vue-mathjax></span>
+          <el-input-number v-model="sigma" :precision="3" :step="0.01" :min="0" :max="10"></el-input-number>
+        </el-form-item>
+        <el-form-item>
+          <span slot="label">低阈值 <vue-mathjax :formula="'$T_L$'"></vue-mathjax></span>
+          <el-input-number v-model="thrLow" :precision="3" :step="0.01" :min="0" :max="1"></el-input-number>
+        </el-form-item>
+        <el-form-item>
+          <span slot="label">高阈值 <vue-mathjax :formula="'$T_H$'"></vue-mathjax></span>
+          <el-input-number v-model="thrHigh" :precision="3" :step="0.01" :min="0" :max="1"></el-input-number>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="success" size="mini">执行</el-button>
+          <el-button type="primary" size="mini">保存结果</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
   </div>
 </template>
 
 <script>
-import LandingPage from '@/components/LandingPage'
-
 export default {
   name: 'electron-canny',
-  components: {
-    LandingPage
+  data() {
+    return {
+      sigma: 4,
+      thrLow: 0.04,
+      thrHigh: 0.10,
+      imageFile: ''
+    }
   }
 }
 </script>
 
 <style>
-/* CSS */
+#app {
+  margin: 30px;
+}
+
+.el-row {
+  margin-bottom: 20px;
+}
 </style>

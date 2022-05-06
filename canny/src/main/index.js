@@ -20,9 +20,10 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    height: 790,
+    width: 750,
     useContentSize: true,
-    width: 1000,
+    title: 'Canny边缘检测算法演示',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -35,6 +36,8 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  mainWindow.removeMenu()
 }
 
 app.on('ready', createWindow)
