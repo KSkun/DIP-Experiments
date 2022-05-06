@@ -1,7 +1,6 @@
 #include <napi.h>
 
-
-static Napi::String Method(const Napi::CallbackInfo& info) {
+static Napi::String Method(const Napi::CallbackInfo &info) {
     // Napi::Env is the opaque data structure containing the environment in which the request is being run.
     // We will need this env when we want to create any new objects inside of the node.js environment
     Napi::Env env = info.Env();

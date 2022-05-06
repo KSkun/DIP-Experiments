@@ -1,9 +1,19 @@
 cmake_minimum_required(VERSION 3.22)
-project(nodecanny)
+project(node-canny)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(${PROJECT_NAME} SHARED hello.cpp)
+# work around for including node-api headers
+if (NOT DEFINED CMAKE_JS_VERSION)
+    # only work with windows & specified node version
+    # not a good idea
+    set(CMAKE_JS_INC $ENV{USERPROFILE}/.cmake-js/node-x64/v16.15.0/include/node)
+endif ()
+
+add_library(${PROJECT_NAME} SHARED
+        ${CMAKE_JS_SRC}
+        hello.cpp
+        )
 
 include_directories(${CMAKE_JS_INC})
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
