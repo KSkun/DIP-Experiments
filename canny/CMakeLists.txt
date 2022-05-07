@@ -10,8 +10,12 @@ if (NOT DEFINED CMAKE_JS_VERSION)
     set(CMAKE_JS_INC $ENV{USERPROFILE}/.cmake-js/node-x64/v16.15.0/include/node)
 endif ()
 
+add_definitions(-D_USE_MATH_DEFINES)
+
 add_library(${PROJECT_NAME} SHARED
         ${CMAKE_JS_SRC}
+        cpp_base64/src/base64.cpp
+
         cpp/napi.cpp
         cpp/image.h
         cpp/image.cpp
@@ -44,3 +48,8 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy ${OpenCV_INSTALL_PATH}/bin/tbb.dll $<TARGET_FILE_DIR:${PROJECT_NAME}>
         COMMAND_EXPAND_LISTS
         )
+
+include_directories(cpp_base64/include)
+
+#add_executable(${PROJECT_NAME}_test cpp/test_main.cpp)
+#target_link_libraries(${PROJECT_NAME}_test PRIVATE ${PROJECT_NAME})

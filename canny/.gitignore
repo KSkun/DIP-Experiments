@@ -11,3 +11,4 @@ thumbs.db
 cmake-build-debug/
 **/*.jpg
 **/*.pdb
+opencv-debug/

@@ -11,11 +11,21 @@
 #include <opencv2/core.hpp>
 
 namespace canny {
-    extern cv::Mat origin, filtered, gradiant, nms, dualThr, result;
+    extern cv::Mat images[6];
 
     bool loadImage(const std::string &path);
 
     std::string getImage(int id);
+
+    void gaussianFilter(float sigma);
+
+    void getGradient(int kernType);
+
+    void nonMaxSuppression();
+
+    void doubleThreshold(float thrLow, float thrHigh);
+
+    void connectEdges();
 }
 
 #endif //NODE_CANNY_IMAGE_H

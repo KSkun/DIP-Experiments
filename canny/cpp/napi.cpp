@@ -20,11 +20,33 @@ static Napi::Boolean loadImage(const Napi::CallbackInfo &info) {
     return Napi::Boolean::New(info.Env(), success);
 }
 
+static Napi::String getImage(const Napi::CallbackInfo &info) {
+    auto id = info[0].ToNumber().Int32Value();
+    auto image = canny::getImage(id);
+    return Napi::String::New(info.Env(), image);
+}
+
+static Napi::String doProcess(const Napi::CallbackInfo &info) {
+    auto sigma = info[0].ToNumber().FloatValue();
+    auto gradKern = info[1].ToNumber().Int32Value();
+    auto thrLow = info[2].ToNumber().FloatValue(), thrHigh = info[3].ToNumber().FloatValue();
+    canny::gaussianFilter(sigma);
+    canny::getGradient(gradKern);
+    canny::nonMaxSuppression();
+    canny::doubleThreshold(thrLow, thrHigh);
+    canny::connectEdges();
+    return Napi::String::New(info.Env(), "");
+}
+
 static Napi::Object Init(Napi::Env env, Napi::Object exports) {
     exports.Set(Napi::String::New(env, "hello"),
                 Napi::Function::New(env, hello));
     exports.Set(Napi::String::New(env, "loadImage"),
                 Napi::Function::New(env, loadImage));
+    exports.Set(Napi::String::New(env, "getImage"),
+                Napi::Function::New(env, getImage));
+    exports.Set(Napi::String::New(env, "doProcess"),
+                Napi::Function::New(env, doProcess));
     return exports;
 }
 
