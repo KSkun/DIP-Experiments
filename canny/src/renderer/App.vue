@@ -2,23 +2,20 @@
   <div id="app">
     <el-row :gutter="20">
       <el-col :span="8">
-        <el-card :body-style="{ padding: '0px' }">
-          <div :style="{ 'height': '150px', 'overflow': 'hidden', 'background-image': 'url(static/avatar-kiana.jpg)',
-          'background-repeat': 'no-repeat', 'background-size': 'contain', 'background-position': 'center' }"></div>
+        <el-card :body-style="{ padding: '0px' }" class="image-card">
+          <div class="image-area"></div>
           <div style="padding: 14px;">原图</div>
         </el-card>
       </el-col>
       <el-col :span="8">
         <el-card :body-style="{ padding: '0px' }">
-          <div :style="{ 'height': '150px', 'overflow': 'hidden', 'background-image': 'url(static/avatar-kiana.jpg)',
-          'background-repeat': 'no-repeat', 'background-size': 'contain', 'background-position': 'center' }"></div>
+          <div class="image-area"></div>
           <div style="padding: 14px;">梯度</div>
         </el-card>
       </el-col>
       <el-col :span="8">
         <el-card :body-style="{ padding: '0px' }">
-          <div :style="{ 'height': '150px', 'overflow': 'hidden', 'background-image': 'url(static/avatar-kiana.jpg)',
-          'background-repeat': 'no-repeat', 'background-size': 'contain', 'background-position': 'center' }"></div>
+          <div class="image-area"></div>
           <div style="padding: 14px;">非极大值抑制</div>
         </el-card>
       </el-col>
@@ -26,15 +23,13 @@
     <el-row :gutter="20">
       <el-col :span="8">
         <el-card :body-style="{ padding: '0px' }">
-          <div :style="{ 'height': '150px', 'overflow': 'hidden', 'background-image': 'url(static/avatar-kiana.jpg)',
-          'background-repeat': 'no-repeat', 'background-size': 'contain', 'background-position': 'center' }"></div>
+          <div class="image-area"></div>
           <div style="padding: 14px;">双阈值</div>
         </el-card>
       </el-col>
       <el-col :span="8">
         <el-card :body-style="{ padding: '0px' }">
-          <div :style="{ 'height': '150px', 'overflow': 'hidden', 'background-image': 'url(static/avatar-kiana.jpg)',
-          'background-repeat': 'no-repeat', 'background-size': 'contain', 'background-position': 'center' }"></div>
+          <div class="image-area"></div>
           <div style="padding: 14px;">结果</div>
         </el-card>
       </el-col>
@@ -44,18 +39,19 @@
       <el-form ref="form" :model="form" label-width="150px" size="mini">
         <el-form-item>
           <span slot="label">原始图片</span>
-          <el-button type="primary" size="mini">选择</el-button>
+          <el-button type="primary" size="mini" v-on:click="onSelectImage()">选择</el-button>
+          <p>{{ imageFile }}</p>
         </el-form-item>
         <el-form-item>
-          <span slot="label">高斯函数标准差 <vue-mathjax :formula="'$\\sigma$'"></vue-mathjax></span>
+          <span slot="label">高斯函数标准差 <vue-mathjax formula="$\sigma$"></vue-mathjax></span>
           <el-input-number v-model="sigma" :precision="3" :step="0.01" :min="0" :max="10"></el-input-number>
         </el-form-item>
         <el-form-item>
-          <span slot="label">低阈值 <vue-mathjax :formula="'$T_L$'"></vue-mathjax></span>
+          <span slot="label">低阈值 <vue-mathjax formula="$T_L$"></vue-mathjax></span>
           <el-input-number v-model="thrLow" :precision="3" :step="0.01" :min="0" :max="1"></el-input-number>
         </el-form-item>
         <el-form-item>
-          <span slot="label">高阈值 <vue-mathjax :formula="'$T_H$'"></vue-mathjax></span>
+          <span slot="label">高阈值 <vue-mathjax formula="$T_H$"></vue-mathjax></span>
           <el-input-number v-model="thrHigh" :precision="3" :step="0.01" :min="0" :max="1"></el-input-number>
         </el-form-item>
         <el-form-item>
@@ -68,6 +64,8 @@
 </template>
 
 <script>
+const {dialog} = require('electron').remote
+
 export default {
   name: 'electron-canny',
   data() {
@@ -76,6 +74,20 @@ export default {
       thrLow: 0.04,
       thrHigh: 0.10,
       imageFile: ''
+    }
+  },
+  methods: {
+    onSelectImage: function () {
+      dialog.showOpenDialog({
+        properties: ['openFile'],
+        filters: [
+          {name: '图片', extensions: ['jpg', 'jpeg', 'png', 'bmp']}
+        ]
+      }).then(result => {
+        if (result.canceled) return
+        console.log('select image ' + result.filePaths[0])
+        this.$data.imageFile = result.filePaths[0]
+      })
     }
   }
 }
@@ -88,5 +100,14 @@ export default {
 
 .el-row {
   margin-bottom: 20px;
+}
+
+.image-area {
+  height: 150px;
+  overflow: hidden;
+  background-image: url("/static/avatar-kiana.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 </style>

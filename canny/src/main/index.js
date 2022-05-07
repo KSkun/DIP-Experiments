@@ -24,6 +24,7 @@ function createWindow() {
     width: 750,
     useContentSize: true,
     title: 'Canny边缘检测算法演示',
+    icon: 'static/icon.png',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
