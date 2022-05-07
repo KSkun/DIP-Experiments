@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(node-canny)
+project(nodecanny)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -12,7 +12,9 @@ endif ()
 
 add_library(${PROJECT_NAME} SHARED
         ${CMAKE_JS_SRC}
-        cpp/hello.cpp
+        cpp/napi.cpp
+        cpp/image.h
+        cpp/image.cpp
         )
 
 include_directories(${CMAKE_JS_INC})
@@ -28,3 +30,17 @@ execute_process(COMMAND node -p "require('node-addon-api').include"
 string(REPLACE "\n" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${NODE_ADDON_API_DIR})
+
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} opencv/cmake)
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:${PROJECT_NAME}> $<TARGET_FILE_DIR:${PROJECT_NAME}>
+        COMMAND_EXPAND_LISTS
+        )
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy ${OpenCV_INSTALL_PATH}/bin/tbb.dll $<TARGET_FILE_DIR:${PROJECT_NAME}>
+        COMMAND_EXPAND_LISTS
+        )

@@ -10,17 +10,23 @@
       <el-col :span="8">
         <el-card :body-style="{ padding: '0px' }">
           <div class="image-area"></div>
+          <div style="padding: 14px;">高斯滤波</div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card :body-style="{ padding: '0px' }">
+          <div class="image-area"></div>
           <div style="padding: 14px;">梯度</div>
         </el-card>
       </el-col>
+    </el-row>
+    <el-row :gutter="20">
       <el-col :span="8">
         <el-card :body-style="{ padding: '0px' }">
           <div class="image-area"></div>
           <div style="padding: 14px;">非极大值抑制</div>
         </el-card>
       </el-col>
-    </el-row>
-    <el-row :gutter="20">
       <el-col :span="8">
         <el-card :body-style="{ padding: '0px' }">
           <div class="image-area"></div>
@@ -33,10 +39,9 @@
           <div style="padding: 14px;">结果</div>
         </el-card>
       </el-col>
-      <el-col :span="8"></el-col>
     </el-row>
     <el-card>
-      <el-form ref="form" :model="form" label-width="150px" size="mini">
+      <el-form ref="form" label-width="150px" size="mini">
         <el-form-item>
           <span slot="label">原始图片</span>
           <el-button type="primary" size="mini" v-on:click="onSelectImage()">选择</el-button>
@@ -65,6 +70,7 @@
 
 <script>
 const {dialog} = require('electron').remote
+const canny = require('electron').remote.require('../../build/Release/nodecanny')
 
 export default {
   name: 'electron-canny',
@@ -85,8 +91,10 @@ export default {
         ]
       }).then(result => {
         if (result.canceled) return
-        console.log('select image ' + result.filePaths[0])
-        this.$data.imageFile = result.filePaths[0]
+        var path = result.filePaths[0]
+        console.log('select image ' + path)
+        this.$data.imageFile = path
+        canny.loadImage(path)
       })
     }
   }

@@ -1,0 +1,12 @@
+<ie>
+    <plugins>
+        <plugin name="HETERO" location="HeteroPlugin.dll">
+        </plugin>
+        <plugin name="CPU" location="MKLDNNPlugin.dll">
+        </plugin>
+        <plugin name="GPU" location="clDNNPlugin.dll">
+        </plugin>
+        <plugin name="MYRIAD" location="myriadPlugin.dll">
+        </plugin>
+    </plugins>
+</ie>
