@@ -18,5 +18,5 @@ new Vue({
 const electron = require('electron').remote
 console.log(electron.app.getAppPath())
 
-const canny = electron.require('../../build/Release/nodecanny')
+const canny = electron.require('../../nodecanny')
 console.log(canny.hello())

@@ -24,7 +24,25 @@
       "output": "build"
     },
     "files": [
-      "dist/electron/**/*"
+      "dist/electron/**/*",
+      {
+        "from": "build/Release",
+        "to": "",
+        "filter": [
+          "*.node",
+          "*.dll"
+        ]
+      }
+    ],
+    "extraFiles": [
+      {
+        "from": "build/Release",
+        "to": "",
+        "filter": [
+          "*.node",
+          "*.dll"
+        ]
+      }
     ],
     "dmg": {
       "contents": [
@@ -40,15 +58,6 @@
           "type": "file"
         }
       ]
-    },
-    "mac": {
-      "icon": "build/icons/icon.icns"
-    },
-    "win": {
-      "icon": "build/icons/icon.ico"
-    },
-    "linux": {
-      "icon": "build/icons"
     }
   },
   "dependencies": {
@@ -90,6 +99,7 @@
     "html-webpack-plugin": "^3.2.0",
     "listr": "^0.14.3",
     "mini-css-extract-plugin": "0.4.0",
+    "multispinner": "^0.2.1",
     "node-addon-api": "^5.0.0",
     "node-loader": "^0.6.0",
     "style-loader": "^0.21.0",

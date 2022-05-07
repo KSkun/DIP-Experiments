@@ -78,7 +78,7 @@
 
 <script>
 const {dialog} = require('electron').remote
-const canny = require('electron').remote.require('../../build/Release/nodecanny')
+const canny = require('electron').remote.require('../../nodecanny')
 
 export default {
   name: 'electron-canny',
